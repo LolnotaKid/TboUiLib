@@ -272,52 +272,20 @@ end
 
 local firstTabSelected = false
 
-function UiLib:CreateWindow(V1)
-    local V2 = type(V1) == "table" and V1 or {Title = V1}
-    local TitleText = V2.Title or "TBO┃Jujutsu Shenanigans"
-    local SubText = V2.Author or ""
-    local IconId = V2.Icon or ""
-
+function UiLib:CreateWindow(titleText)
     local TitleBar = Instance.new("TextLabel", G2L["2"])
     TitleBar.Name = "TitleBar"
     TitleBar.Size = UDim2.new(1, 0, 0, 30)
     TitleBar.Position = UDim2.new(0, 0, 0, 0)
     TitleBar.BackgroundTransparency = 1
-    TitleBar.Text = TitleText
+    TitleBar.Text = titleText or "TBO┃Jujutsu Shenanigans"
     TitleBar.FontFace = fontFaceRegular
     TitleBar.TextSize = 20
     TitleBar.TextColor3 = Color3.fromRGB(255, 255, 255)
     TitleBar.TextStrokeTransparency = 0.2
     TitleBar.TextWrapped = true
     TitleBar.TextXAlignment = Enum.TextXAlignment.Left
-
-    local totalPadding = 10
-    if IconId ~= "" then
-        totalPadding = 38
-        local winIcon = Instance.new("ImageLabel", TitleBar)
-        winIcon.Size = UDim2.new(0, 22, 0, 22)
-        winIcon.Position = UDim2.new(0, 10, 0.5, -11)
-        winIcon.BackgroundTransparency = 1
-        if string.find(IconId, "rbxassetid://") or string.find(IconId, "http") then
-            winIcon.Image = IconId
-        else
-            winIcon.Image = "rbxassetid://10734950309"
-        end
-    end
-
-    Instance.new("UIPadding", TitleBar).PaddingLeft = UDim.new(0, totalPadding)
-
-    if SubText ~= "" then
-        local subLabel = Instance.new("TextLabel", TitleBar)
-        subLabel.Size = UDim2.new(1, -120, 0, 12)
-        subLabel.Position = UDim2.new(0, 0, 1, -4)
-        subLabel.BackgroundTransparency = 1
-        subLabel.Text = SubText
-        subLabel.FontFace = fontFaceRegular
-        subLabel.TextSize = 11
-        subLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
-        subLabel.TextXAlignment = Enum.TextXAlignment.Left
-    end
+    Instance.new("UIPadding", TitleBar).PaddingLeft = UDim.new(0, 10)
 
     local closeBtn = Instance.new("TextButton", TitleBar)
     closeBtn.Size = UDim2.new(0, 40, 0, 35)
@@ -466,7 +434,6 @@ function UiLib:CreateWindow(V1)
             G2L["2"]:TweenSize(UDim2.new(0, math.clamp(initialSize.X.Offset + delta.X, 550, math.floor(screenSize.X * 0.9)), 0, math.clamp(initialSize.Y.Offset + delta.Y, 300, math.floor(screenSize.Y * 0.95))), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.1, true)
         end
     end)
-    return self
 end
 
 local isMobile = game:GetService("UserInputService").TouchEnabled
